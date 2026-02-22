@@ -234,12 +234,46 @@
       transform: scale(1.3);
     }
 
+
+
+    .slide {
+      overflow-y: auto;
+      padding-bottom: 96px;
+    }
+
+    .product-layout {
+      display: grid;
+      grid-template-columns: 1.15fr 1fr;
+      gap: 24px;
+      align-items: start;
+      margin-top: 18px;
+    }
+
+    .product-image {
+      width: 100%;
+      max-height: 280px;
+      object-fit: cover;
+      border-radius: 12px;
+      border: 1px solid #2d2d2d;
+      background: #111;
+    }
+
+    .product-image-stack {
+      display: grid;
+      gap: 16px;
+    }
+
+    .content h3 { font-size: 24px; }
+    .content p, .content li { font-size: 18px; line-height: 1.45; }
+
     @media (max-width: 768px) {
       .slide { padding: 40px; }
       .slide-title { font-size: 32px; }
       .slide-subtitle { font-size: 20px; }
       .grid-2 { grid-template-columns: 1fr; }
       .grid-3 { grid-template-columns: 1fr; }
+      .product-layout { grid-template-columns: 1fr; }
+      .product-image { max-height: 220px; }
     }
 
     @media print {
@@ -285,24 +319,30 @@
     <div class="slide" data-slide="3">
       <h2 class="slide-title">Product #1: Oasis Insulated Water Bottles</h2>
       <div class="content">
-        <div class="grid-2">
-          <div class="card">
-            <h3>32oz Oasis Insulated Water Bottle</h3>
-            <ul>
-              <li>Double-wall vacuum insulation (hot 12hrs, cold 24hrs)</li>
-              <li>BPA-free stainless steel construction</li>
-              <li>Spill-resistant lid design</li>
-              <li>Perfect for work, travel, and fitness</li>
-            </ul>
+        <div class="product-layout">
+          <div class="grid-2" style="margin-top:0;">
+            <div class="card">
+              <h3>32oz Oasis Insulated Water Bottle</h3>
+              <ul>
+                <li>Double-wall vacuum insulation (hot 12hrs, cold 24hrs)</li>
+                <li>BPA-free stainless steel construction</li>
+                <li>Spill-resistant lid design</li>
+                <li>Perfect for work, travel, and fitness</li>
+              </ul>
+            </div>
+            <div class="card">
+              <h3>26oz Oasis Insulated Water Bottle</h3>
+              <ul>
+                <li>Similar to Owala water bottle design</li>
+                <li>Sleek profile fits most cup holders</li>
+                <li>Versatile capacity for daily hydration</li>
+                <li>Premium branding potential</li>
+              </ul>
+            </div>
           </div>
-          <div class="card">
-            <h3>26oz Oasis Insulated Water Bottle</h3>
-            <ul>
-              <li>Similar to Owala water bottle design</li>
-              <li>Sleek profile fits most cup holders</li>
-              <li>Versatile capacity for daily hydration</li>
-              <li>Premium branding potential</li>
-            </ul>
+          <div class="product-image-stack">
+            <img src="../oasis-water-bottle-32oz.jpg" alt="Oasis insulated water bottle" class="product-image" />
+            <img src="../water-bottle.jpg" alt="Second insulated water bottle style" class="product-image" />
           </div>
         </div>
         <div style="margin-top: 32px;">
@@ -328,25 +368,31 @@
     <div class="slide" data-slide="4">
       <h2 class="slide-title">Product #2: Soft-Touch Aluminum Pens</h2>
       <div class="content">
-        <div class="grid-2">
-          <div class="card">
-            <h3>Soft-Touch Aluminum Pen w/ Stylus</h3>
-            <ul>
-              <li>18-gram weight for premium feel</li>
-              <li>Soft rubberized finish for comfortable grip</li>
-              <li>Click action with smooth black ink</li>
-              <li>Built-in touch screen stylus</li>
-              <li>Chrome trims for modern aesthetic</li>
-            </ul>
+        <div class="product-layout">
+          <div class="grid-2" style="margin-top:0;">
+            <div class="card">
+              <h3>Soft-Touch Aluminum Pen w/ Stylus</h3>
+              <ul>
+                <li>18-gram weight for premium feel</li>
+                <li>Soft rubberized finish for comfortable grip</li>
+                <li>Click action with smooth black ink</li>
+                <li>Built-in touch screen stylus</li>
+                <li>Chrome trims for modern aesthetic</li>
+              </ul>
+            </div>
+            <div class="card">
+              <h3>Metal Soft Touch Stylus Pen</h3>
+              <ul>
+                <li>High-quality aluminum metal body</li>
+                <li>Soft velvet touch rubberized finish</li>
+                <li>Plunger action with laser engraving</li>
+                <li>Professional and functional</li>
+              </ul>
+            </div>
           </div>
-          <div class="card">
-            <h3>Metal Soft Touch Stylus Pen</h3>
-            <ul>
-              <li>High-quality aluminum metal body</li>
-              <li>Soft velvet touch rubberized finish</li>
-              <li>Plunger action with laser engraving</li>
-              <li>Professional and functional</li>
-            </ul>
+          <div class="product-image-stack">
+            <img src="../soft-touch-pen.jpg" alt="Soft-touch aluminum pen with stylus" class="product-image" />
+            <img src="../pen.jpg" alt="Metal stylus pen" class="product-image" />
           </div>
         </div>
         <div style="margin-top: 32px;">
@@ -372,15 +418,20 @@
     <div class="slide" data-slide="5">
       <h2 class="slide-title">Product #3: Pontunez Floating Speaker</h2>
       <div class="content">
-        <div class="card">
-          <h3>Pontunez Floating Wireless Speaker</h3>
-          <ul>
-            <li>Waterproof and floats in water</li>
-            <li>Bluetooth connectivity</li>
-            <li>Long battery life</li>
-            <li>Premium sound quality</li>
-            <li>4.25" W x 4.25" L x 3" H</li>
-          </ul>
+        <div class="product-layout" style="margin-top:0;">
+          <div class="card">
+            <h3>Pontunez Floating Wireless Speaker</h3>
+            <ul>
+              <li>Waterproof and floats in water</li>
+              <li>Bluetooth connectivity</li>
+              <li>Long battery life</li>
+              <li>Premium sound quality</li>
+              <li>4.25" W x 4.25" L x 3" H</li>
+            </ul>
+          </div>
+          <div>
+            <img src="../floating-speaker.jpg" alt="Pontunez floating wireless speaker" class="product-image" />
+          </div>
         </div>
         <div style="margin-top: 32px;">
           <h3>Why Tech Loves It:</h3>
@@ -405,15 +456,20 @@
     <div class="slide" data-slide="6">
       <h2 class="slide-title">Product #4: BEST Can Cooler</h2>
       <div class="content">
-        <div class="card">
-          <h3>BEST Can Cooler</h3>
-          <ul>
-            <li>1/8" thick medium-density foam</li>
-            <li>Excellent insulation properties</li>
-            <li>Machine washable</li>
-            <li>4" W x 4" H size</li>
-            <li>Prop 65 compliant</li>
-          </ul>
+        <div class="product-layout" style="margin-top:0;">
+          <div class="card">
+            <h3>BEST Can Cooler</h3>
+            <ul>
+              <li>1/8" thick medium-density foam</li>
+              <li>Excellent insulation properties</li>
+              <li>Machine washable</li>
+              <li>4" W x 4" H size</li>
+              <li>Prop 65 compliant</li>
+            </ul>
+          </div>
+          <div>
+            <img src="../can-cooler.jpg" alt="BEST can cooler" class="product-image" />
+          </div>
         </div>
         <div style="margin-top: 32px;">
           <h3>Why Tech Loves It:</h3>
@@ -438,14 +494,19 @@
     <div class="slide" data-slide="7">
       <h2 class="slide-title">Product #5: Stress Relieving Coloring Books</h2>
       <div class="content">
-        <div class="card">
-          <h3>Stress Relieving Coloring Books for Adults</h3>
-          <ul>
-            <li>48 pages of detailed artwork</li>
-            <li>24 different design themes</li>
-            <li>Perforated pages for framing</li>
-            <li>Heavy-duty cover</li>
-          </ul>
+        <div class="product-layout" style="margin-top:0;">
+          <div class="card">
+            <h3>Stress Relieving Coloring Books for Adults</h3>
+            <ul>
+              <li>48 pages of detailed artwork</li>
+              <li>24 different design themes</li>
+              <li>Perforated pages for framing</li>
+              <li>Heavy-duty cover</li>
+            </ul>
+          </div>
+          <div>
+            <img src="../coloring-book.jpg" alt="Stress relieving coloring books" class="product-image" />
+          </div>
         </div>
         <div style="margin-top: 32px;">
           <h3>Themes Include:</h3>
