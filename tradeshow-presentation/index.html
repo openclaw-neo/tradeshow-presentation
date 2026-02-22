@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tech Tradeshow Product Recommendations</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-primary: #0a0a0a;
+      --bg-secondary: #141414;
+      --text-primary: #f8f8f8;
+      --text-secondary: #a1a1a1;
+      --accent: #3b82f6;
+      --accent-hover: #60a5fa;
+      --margin: 80px;
+      --grid: 40px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      overflow: hidden;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 600;
+      line-height: 1.1;
+    }
+
+    .presentation {
+      width: 100vw;
+      height: 100vh;
+      position: relative;
+    }
+
+    .slide {
+      width: 100vw;
+      height: 100vh;
+      display: none;
+      padding: var(--margin);
+      flex-direction: column;
+    }
+
+    .slide.active {
+      display: flex;
+      animation: fadeIn 0.5s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .slide-title {
+      font-size: 64px;
+      margin-bottom: var(--grid);
+      color: var(--text-primary);
+    }
+
+    .slide-subtitle {
+      font-size: 32px;
+      color: var(--accent);
+      font-weight: 500;
+      margin-bottom: var(--grid);
+    }
+
+    .content {
+      flex: 1;
+    }
+
+    .content h2 {
+      font-size: 48px;
+      margin-bottom: var(--grid);
+      color: var(--text-primary);
+    }
+
+    .content h3 {
+      font-size: 28px;
+      margin-bottom: 20px;
+      color: var(--accent);
+    }
+
+    .content p {
+      font-size: 20px;
+      line-height: 1.6;
+      color: var(--text-secondary);
+      margin-bottom: 16px;
+    }
+
+    .content ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .content li {
+      font-size: 20px;
+      line-height: 1.6;
+      color: var(--text-secondary);
+      margin-bottom: 12px;
+      padding-left: 24px;
+      position: relative;
+    }
+
+    .content li::before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    .content li::before {
+      content: "•";
+    }
+
+    .content li::before {
+      content: "→";
+    }
+
+    .content strong {
+      color: var(--text-primary);
+      font-weight: 600;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--grid);
+      margin-top: var(--grid);
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--grid);
+      margin-top: var(--grid);
+    }
+
+    .card {
+      background: var(--bg-secondary);
+      border: 1px solid #2d2d2d;
+      border-radius: 12px;
+      padding: 32px;
+    }
+
+    .card h3 {
+      font-size: 24px;
+      margin-top: 0;
+      margin-bottom: 16px;
+      color: var(--accent);
+    }
+
+    .price-box {
+      background: #1f1f1f;
+      padding: 24px 32px;
+      border-radius: 8px;
+      display: inline-block;
+      margin-top: 16px;
+    }
+
+    .price-value {
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--accent);
+    }
+
+    .price-note {
+      font-size: 14px;
+      color: var(--text-secondary);
+      margin-top: 4px;
+    }
+
+    .link-text {
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .link-text:hover {
+      text-decoration: underline;
+    }
+
+    .contact-info {
+      margin-top: auto;
+      padding-top: var(--grid);
+      border-top: 1px solid #2d2d2d;
+    }
+
+    .contact-text {
+      font-size: 20px;
+      color: var(--text-secondary);
+    }
+
+    .slide-number {
+      position: fixed;
+      bottom: 32px;
+      right: 32px;
+      font-size: 24px;
+      color: var(--text-secondary);
+    }
+
+    .nav-dots {
+      position: fixed;
+      bottom: 32px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 8px;
+    }
+
+    .nav-dot {
+      width: 12px;
+      height: 12px;
+      background: #2d2d2d;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .nav-dot.active {
+      background: var(--accent);
+      transform: scale(1.3);
+    }
+
+    @media (max-width: 768px) {
+      .slide { padding: 40px; }
+      .slide-title { font-size: 32px; }
+      .slide-subtitle { font-size: 20px; }
+      .grid-2 { grid-template-columns: 1fr; }
+      .grid-3 { grid-template-columns: 1fr; }
+    }
+
+    @media print {
+      body { background: white; color: black; }
+      .slide { display: block !important; page-break-after: always; }
+      .nav-dots, .slide-number { display: none; }
+      :root { --bg-primary: white; --text-primary: black; --accent: #3b82f6; }
+    }
+  </style>
+</head>
+<body>
+  <div class="presentation">
+    <!-- Slide 1: Title -->
+    <div class="slide active" data-slide="1">
+      <div style="flex: 1; display: flex; flex-direction: column; justify-content: center;">
+        <span class="slide-subtitle">Tech Tradeshow Product Recommendations</span>
+        <h1 class="slide-title">High-impact promotional products designed for technology companies</h1>
+      </div>
+      <div class="contact-info">
+        <p class="contact-text">moltbot.vm@gmail.com | 2026</p>
+      </div>
+    </div>
+
+    <!-- Slide 2: Why These Products Work -->
+    <div class="slide" data-slide="2">
+      <h2 class="slide-title">Why These Products Work</h2>
+      <div class="content">
+        <h3 style="font-size: 32px;">Functionality First</h3>
+        <p>Tech professionals value practical, high-quality items they'll actually use daily.</p>
+        
+        <h3 style="font-size: 32px;">Brand Reinforcement</h3>
+        <p>Each item serves as daily brand exposure throughout the workweek.</p>
+        
+        <h3 style="font-size: 32px;">Perceived Value</h3>
+        <p>Premium items make your brand appear premium and thoughtful.</p>
+        
+        <h3 style="font-size: 32px;">Conversation Starters</h3>
+        <p>Unique items spark engagement and memorability at your booth.</p>
+      </div>
+    </div>
+
+    <!-- Slide 3: Product 1 -->
+    <div class="slide" data-slide="3">
+      <h2 class="slide-title">Product #1: Oasis Insulated Water Bottles</h2>
+      <div class="content">
+        <div class="grid-2">
+          <div class="card">
+            <h3>32oz Oasis Insulated Water Bottle</h3>
+            <ul>
+              <li>Double-wall vacuum insulation (hot 12hrs, cold 24hrs)</li>
+              <li>BPA-free stainless steel construction</li>
+              <li>Spill-resistant lid design</li>
+              <li>Perfect for work, travel, and fitness</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>26oz Oasis Insulated Water Bottle</h3>
+            <ul>
+              <li>Similar to Owala water bottle design</li>
+              <li>Sleek profile fits most cup holders</li>
+              <li>Versatile capacity for daily hydration</li>
+              <li>Premium branding potential</li>
+            </ul>
+          </div>
+        </div>
+        <div style="margin-top: 32px;">
+          <h3>Why Tech Loves It:</h3>
+          <ul>
+            <li>Universal need across all tech roles</li>
+            <li>Premium feel reinforces brand quality</li>
+            <li>Extensive usage throughout the day</li>
+            <li>Multiple branding areas available</li>
+          </ul>
+        </div>
+        <div class="price-box">
+          <div class="price-value">$22.50 - $25.83</div>
+          <div class="price-note">Bulk pricing available</div>
+        </div>
+        <p style="margin-top: 24px;">
+          <a href="https://shop.theprintshop-oc.com/pd/IBZHL-FBMFT/32-oz-oasis-insulated-water-bottle" class="link-text" target="_blank">View Product Details</a>
+        </p>
+      </div>
+    </div>
+
+    <!-- Slide 4: Product 2 -->
+    <div class="slide" data-slide="4">
+      <h2 class="slide-title">Product #2: Soft-Touch Aluminum Pens</h2>
+      <div class="content">
+        <div class="grid-2">
+          <div class="card">
+            <h3>Soft-Touch Aluminum Pen w/ Stylus</h3>
+            <ul>
+              <li>18-gram weight for premium feel</li>
+              <li>Soft rubberized finish for comfortable grip</li>
+              <li>Click action with smooth black ink</li>
+              <li>Built-in touch screen stylus</li>
+              <li>Chrome trims for modern aesthetic</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>Metal Soft Touch Stylus Pen</h3>
+            <ul>
+              <li>High-quality aluminum metal body</li>
+              <li>Soft velvet touch rubberized finish</li>
+              <li>Plunger action with laser engraving</li>
+              <li>Professional and functional</li>
+            </ul>
+          </div>
+        </div>
+        <div style="margin-top: 32px;">
+          <h3>Why Tech Loves It:</h3>
+          <ul>
+            <li>Combines analog & digital functionality</li>
+            <li>Premium feel suggests premium brand</li>
+            <li>Daily usage ensures brand visibility</li>
+            <li>Professional appearance for office</li>
+          </ul>
+        </div>
+        <div class="price-box">
+          <div class="price-value">$0.75 - $0.89</div>
+          <div class="price-note">Laser engraving included</div>
+        </div>
+        <p style="margin-top: 24px;">
+          <a href="https://shop.theprintshop-oc.com/pd/MLFZJ-EFFGP/soft-touch-aluminum-pen-w-stylus" class="link-text" target="_blank">View Product Details</a>
+        </p>
+      </div>
+    </div>
+
+    <!-- Slide 5: Product 3 -->
+    <div class="slide" data-slide="5">
+      <h2 class="slide-title">Product #3: Pontunez Floating Speaker</h2>
+      <div class="content">
+        <div class="card">
+          <h3>Pontunez Floating Wireless Speaker</h3>
+          <ul>
+            <li>Waterproof and floats in water</li>
+            <li>Bluetooth connectivity</li>
+            <li>Long battery life</li>
+            <li>Premium sound quality</li>
+            <li>4.25" W x 4.25" L x 3" H</li>
+          </ul>
+        </div>
+        <div style="margin-top: 32px;">
+          <h3>Why Tech Loves It:</h3>
+          <ul>
+            <li>Unexpected and memorable item</li>
+            <li>Perfect for modern lifestyle events</li>
+            <li>Demonstrates innovation at your booth</li>
+            <li>High shareability on social media</li>
+          </ul>
+        </div>
+        <div class="price-box">
+          <div class="price-value">Custom Pricing</div>
+          <div class="price-note">Contact for bulk quotes</div>
+        </div>
+        <p style="margin-top: 24px;">
+          <a href="https://shop.theprintshop-oc.com/pd/LQYVK-BRPZP/pontunez-floating-wireless-speaker" class="link-text" target="_blank">View Product Details</a>
+        </p>
+      </div>
+    </div>
+
+    <!-- Slide 6: Product 4 -->
+    <div class="slide" data-slide="6">
+      <h2 class="slide-title">Product #4: BEST Can Cooler</h2>
+      <div class="content">
+        <div class="card">
+          <h3>BEST Can Cooler</h3>
+          <ul>
+            <li>1/8" thick medium-density foam</li>
+            <li>Excellent insulation properties</li>
+            <li>Machine washable</li>
+            <li>4" W x 4" H size</li>
+            <li>Prop 65 compliant</li>
+          </ul>
+        </div>
+        <div style="margin-top: 32px;">
+          <h3>Why Tech Loves It:</h3>
+          <ul>
+            <li>Perfect for casual professional settings</li>
+            <li>Great for outdoor events and picnics</li>
+            <li>High perceived value for the price</li>
+            <li>Works well as secondary giveaway</li>
+          </ul>
+        </div>
+        <div class="price-box">
+          <div class="price-value">Bulk Pricing</div>
+          <div class="price-note">Great secondary item</div>
+        </div>
+        <p style="margin-top: 24px;">
+          <a href="https://shop.theprintshop-oc.com/pd/RNFYQ-DMWST/best-can-cooler" class="link-text" target="_blank">View Product Details</a>
+        </p>
+      </div>
+    </div>
+
+    <!-- Slide 7: Product 5 -->
+    <div class="slide" data-slide="7">
+      <h2 class="slide-title">Product #5: Stress Relieving Coloring Books</h2>
+      <div class="content">
+        <div class="card">
+          <h3>Stress Relieving Coloring Books for Adults</h3>
+          <ul>
+            <li>48 pages of detailed artwork</li>
+            <li>24 different design themes</li>
+            <li>Perforated pages for framing</li>
+            <li>Heavy-duty cover</li>
+          </ul>
+        </div>
+        <div style="margin-top: 32px;">
+          <h3>Themes Include:</h3>
+          <ul>
+            <li>Nature | Patterns | Oceans | Animals</li>
+            <li>ZenDoodle | Brighter Minds | STEMulate</li>
+            <li>Coloring the World</li>
+          </ul>
+          <p style="margin-top: 16px;">Plus word search, crossword, and sudoku options</p>
+        </div>
+        <div style="margin-top: 32px;">
+          <h3>Why Tech Loves It:</h3>
+          <ul>
+            <li>Addresses mental wellness (huge in tech)</li>
+            <li>Encourages screen-free time</li>
+            <li>Thoughtful and considerate gift</li>
+            <li>Multiple themes for various interests</li>
+          </ul>
+        </div>
+        <div class="price-box">
+          <div class="price-value">Bulk Pricing</div>
+          <div class="price-note">Multiple theme options</div>
+        </div>
+        <p style="margin-top: 24px;">
+          <a href="https://shop.theprintshop-oc.com/pd/LGPFP-JTWRT/stress-relieving-coloring-books-for-a" class="link-text" target="_blank">View Product Details</a>
+        </p>
+      </div>
+    </div>
+
+    <!-- Slide 8: Bundle Deals -->
+    <div class="slide" data-slide="8">
+      <h2 class="slide-title">Package Deals</h2>
+      <p class="slide-subtitle">Maximize perceived value while maintaining your budget</p>
+      <div class="content">
+        <div class="grid-3">
+          <div class="card">
+            <h3>The Professional Bundle</h3>
+            <ul>
+              <li>32oz Water Bottle</li>
+              <li>Soft-Touch Aluminum Pen</li>
+              <li>Waterproof Phone Case</li>
+            </ul>
+            <div style="margin-top: 24px;">
+              <div class="price-value" style="font-size: 24px;">$50+</div>
+              <div class="price-note">Perceived Value</div>
+            </div>
+            <div style="margin-top: 16px;">
+              <div class="price-value" style="font-size: 24px; color: #a855f7;">$25-30</div>
+              <div class="price-note">Your Cost</div>
+            </div>
+          </div>
+          
+          <div class="card">
+            <h3>The Office Bundle</h3>
+            <ul>
+              <li>BEST Can Cooler</li>
+              <li>Stress Relieving Coloring Book</li>
+              <li>Desk Organizer</li>
+            </ul>
+            <div style="margin-top: 24px;">
+              <div class="price-value" style="font-size: 24px;">$40+</div>
+              <div class="price-note">Perceived Value</div>
+            </div>
+            <div style="margin-top: 16px;">
+              <div class="price-value" style="font-size: 24px; color: #a855f7;">$20-25</div>
+              <div class="price-note">Your Cost</div>
+            </div>
+          </div>
+          
+          <div class="card">
+            <h3>The Fun Bundle</h3>
+            <ul>
+              <li>Pontunez Floating Speaker</li>
+              <li>Water-Resistant Phone Pouch</li>
+              <li>Portable Charger</li>
+            </ul>
+            <div style="margin-top: 24px;">
+              <div class="price-value" style="font-size: 24px;">$60+</div>
+              <div class="price-note">Perceived Value</div>
+            </div>
+            <div style="margin-top: 16px;">
+              <div class="price-value" style="font-size: 24px; color: #a855f7;">$30-35</div>
+              <div class="price-note">Your Cost</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 9: Pitch Talking Points -->
+    <div class="slide" data-slide="9">
+      <h2 class="slide-title">How to Pitch to Your Client</h2>
+      <div class="content">
+        <h3 style="font-size: 32px;">"These items solve real problems"</h3>
+        <p>Tech workers are always on the move. They need reliable hydration, premium tools that work, and thoughtful gifts that show you understand their world.</p>
+        
+        <h3 style="font-size: 32px;">"High ROI on each item"</h3>
+        <p>Each item seen 10-20 times daily. 6+ month lifespan expected. Multiple branding touchpoints throughout the workweek.</p>
+        
+        <h3 style="font-size: 32px;">"Perfect for tech culture"</h3>
+        <p>Professional but not formal. Modern and functional. Shows understanding of their needs. Memorable without being gimmicky.</p>
+        
+        <h3 style="font-size: 32px;">"Conversation starters"</h3>
+        <p>Each item at your booth creates opportunities. The floating speaker, coloring books, and stylus pens all spark engagement naturally.</p>
+      </div>
+    </div>
+
+    <!-- Slide 10: Next Steps -->
+    <div class="slide" data-slide="10">
+      <h2 class="slide-title">Next Steps</h2>
+      <p class="slide-subtitle">Let's Get Started</p>
+      <div class="content">
+        <div class="grid-2">
+          <div class="card">
+            <h3 style="font-size: 24px;">1. Review & Discuss</h3>
+            <p>Go through these recommendations with your client team.</p>
+          </div>
+          <div class="card">
+            <h3 style="font-size: 24px;">2. Consider Your Goals</h3>
+            <p>What's your budget? What message do you want to send?</p>
+          </div>
+          <div class="card">
+            <h3 style="font-size: 24px;">3. Create Mockups</h3>
+            <p>We can create custom branding mockups for each item.</p>
+          </div>
+          <div class="card">
+            <h3 style="font-size: 24px;">4. Place Your Order</h3>
+            <p>We'll handle production, branding, and shipping.</p>
+          </div>
+        </div>
+        <div class="contact-info" style="margin-top: 48px; text-align: center;">
+          <p class="contact-text" style="font-size: 24px; margin-bottom: 8px;">Contact: moltbot.vm@gmail.com</p>
+          <p class="contact-text"><a href="https://shop.theprintshop-oc.com/" class="link-text">https://shop.theprintshop-oc.com/</a></p>
+          <p class="contact-text" style="margin-top: 16px;">2026 - Tech Tradeshow Specialist</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="nav-dots">
+    <div class="nav-dot active" data-slide="1"></div>
+    <div class="nav-dot" data-slide="2"></div>
+    <div class="nav-dot" data-slide="3"></div>
+    <div class="nav-dot" data-slide="4"></div>
+    <div class="nav-dot" data-slide="5"></div>
+    <div class="nav-dot" data-slide="6"></div>
+    <div class="nav-dot" data-slide="7"></div>
+    <div class="nav-dot" data-slide="8"></div>
+    <div class="nav-dot" data-slide="9"></div>
+    <div class="nav-dot" data-slide="10"></div>
+  </div>
+
+  <div class="slide-number">
+    <span id="current-slide">1</span> / <span id="total-slides">10</span>
+  </div>
+
+  <script>
+    const slides = document.querySelectorAll('.slide');
+    const dots = document.querySelectorAll('.nav-dot');
+    const totalSlides = slides.length;
+    document.getElementById('total-slides').textContent = totalSlides;
+
+    let currentSlide = 0;
+
+    function updateSlide(index) {
+      slides.forEach(slide => slide.classList.remove('active'));
+      dots.forEach(dot => dot.classList.remove('active'));
+      
+      slides[index].classList.add('active');
+      dots[index].classList.add('active');
+      document.getElementById('current-slide').textContent = index + 1;
+      currentSlide = index;
+    }
+
+    function nextSlide() {
+      if (currentSlide < totalSlides - 1) {
+        updateSlide(currentSlide + 1);
+      }
+    }
+
+    function prevSlide() {
+      if (currentSlide > 0) {
+        updateSlide(currentSlide - 1);
+      }
+    }
+
+    dots.forEach((dot, index) => {
+      dot.addEventListener('click', () => updateSlide(index));
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'ArrowDown') {
+        nextSlide();
+      } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+        prevSlide();
+      }
+    });
+
+    // Initialize
+    updateSlide(0);
+  </script>
+</body>
+</html>

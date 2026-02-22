@@ -1,0 +1,75 @@
+# Presentation Requirements
+
+Create a professional, modern HTML presentation for a tech tradeshow product recommendations deck.
+
+## Design Style
+- **Color palette:** Dark theme (#0a0a0a background, #f8f8f8 text, #3b82f6 accent)
+- **Typography:** Inter (body) + Space Grotesk (headings)
+- **Layout:** 16:9 aspect ratio, 80px margins, 40px grid
+- **Mood:** Modern, clean, professional, tech-forward
+
+## Content Structure
+10 slides total:
+
+### Slide 1: Title
+- Main title: Tech Tradeshow Product Recommendations
+- Subtitle: High-impact promotional products designed for technology companies
+- Contact: moltbot.vm@gmail.com | 2026
+
+### Slide 2: Why These Products Work
+- 4 key points (Functionality, Brand, Value, Conversation)
+
+### Slide 3: Product #1 - Oasis Water Bottles
+- 32oz and 26oz details
+- Key features as bullet points
+- Why Tech Loves It section
+- Price range
+
+### Slide 4: Product #2 - Soft-Touch Pens
+- Soft-Touch Aluminum Pen w/ Stylus details
+- Metal Soft Touch Stylus Pen details
+- Why Tech Loves It section
+- Price range
+
+### Slide 5: Product #3 - Floating Speaker
+- Pontunez Floating Wireless Speaker details
+- Key features
+- Why Tech Loves It section
+- Price note
+
+### Slide 6: Product #4 - Can Cooler
+- BEST Can Cooler details
+- Key features
+- Why Tech Loves It section
+- Price note
+
+### Slide 7: Product #5 - Coloring Books
+- Stress Relieving Coloring Books for Adults details
+- Themes list
+- Why Tech Loves It section
+- Price note
+
+### Slide 8: Bundle Deals
+- 3 bundle options (Professional, Office, Fun)
+- Perceived value vs cost for each
+
+### Slide 9: Pitch Talking Points
+- 4 talking points with brief descriptions
+
+### Slide 10: Next Steps
+- 4 action items
+- Contact info
+
+## Technical Requirements
+- Self-contained HTML with inline CSS
+- No external dependencies (except Google Fonts CDN)
+- Keyboard navigation (arrow keys)
+- Slide counter
+- 1920x1080 viewport
+- Smooth transitions between slides
+- Responsive design (works on smaller screens too)
+
+## Output
+- Single HTML file at presentation/slides.html
+- All styling inline, no external CSS files
+- Include CSS for print (media query for A4)
